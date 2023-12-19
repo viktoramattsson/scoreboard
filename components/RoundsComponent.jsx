@@ -1,9 +1,10 @@
-import React, { useContext, useState, useEffect } from "react";
-import PlayersModal from "./PlayersModal";
-import AppContext from "./AppContext";
-import PlayerScoresContext from "./PlayerScoresContext";
-import { Button } from "@mui/material";
-import { useRouter } from "next/router";
+import React, { useContext, useState, useEffect } from 'react';
+import PlayersModal from './PlayersModal';
+import AppContext from './AppContext';
+import PlayerScoresContext from './PlayerScoresContext';
+import { Button } from '@mui/material';
+import { useRouter } from 'next/router';
+import s from './RoundsComponent.module.css';
 
 import {
   Table,
@@ -13,7 +14,7 @@ import {
   TableHead,
   TableRow,
   Paper,
-} from "@mui/material";
+} from '@mui/material';
 
 function RoundsComponent() {
   const context = useContext(AppContext);
@@ -51,7 +52,7 @@ function RoundsComponent() {
   function handleTotal() {}
 
   function handleEndGame() {
-    router.push("/"); // Playersmodal visas kort. störande!
+    router.push('/'); // Playersmodal visas kort. störande!
     setPlayerName([]);
     setRounds([{ id: 1, scores: [] }]);
   }
@@ -81,7 +82,7 @@ function RoundsComponent() {
               {rounds.map((round) => (
                 <TableCell
                   style={{
-                    textAlign: "center",
+                    textAlign: 'center',
                   }}
                   key={round.id}
                 >
@@ -93,19 +94,24 @@ function RoundsComponent() {
           <TableBody>
             {playerName.map((name, playerIndex) => (
               <TableRow key={playerIndex}>
-                <TableCell style={{ fontSize: "2rem", maxWidth: "20%" }}>
+                <TableCell style={{ fontSize: '2rem', maxWidth: '20%' }}>
                   {name}
                 </TableCell>
                 {rounds.map((round, roundIndex) => (
-                  <TableCell key={roundIndex}>
+                  <TableCell
+                    style={{
+                      textAlign: 'center',
+                    }}
+                    key={roundIndex}
+                  >
                     <input
                       style={{
-                        width: "2.5rem",
-                        fontSize: "2rem",
-                        textAlign: "center",
+                        width: '2.5rem',
+                        fontSize: '2rem',
+                        textAlign: 'center',
                       }}
                       type="text"
-                      value={rounds[roundIndex]?.scores[playerIndex] || ""}
+                      value={rounds[roundIndex]?.scores[playerIndex] || ''}
                       onChange={(e) =>
                         handleScoreChange(
                           roundIndex,
@@ -121,19 +127,23 @@ function RoundsComponent() {
           </TableBody>
         </Table>
       </TableContainer>
-
-      <Button variant="text" onClick={addRound}>
-        Add Round
-      </Button>
-      <Button variant="text" onClick={handleClickRestart}>
-        Restart
-      </Button>
-      <Button variant="text" onClick={handleTotal}>
-        See Total
-      </Button>
-      <Button variant="text" onClick={handleEndGame}>
-        End Game
-      </Button>
+      <div className={s.buttonContainer}>
+        <Button className={s.btn} variant="text" onClick={addRound}>
+          Add Round
+        </Button>
+        <Button className={s.btn} variant="text" onClick={handleClickRestart}>
+          Restart
+        </Button>
+        <Button className={s.btn} variant="text" onClick={handleTotal}>
+          See Total
+        </Button>
+        <Button className={s.btn} variant="text">
+          Save Game
+        </Button>
+        <Button className={s.btn} variant="text" onClick={handleEndGame}>
+          End Game
+        </Button>
+      </div>
     </>
   );
 }

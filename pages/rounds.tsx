@@ -1,5 +1,5 @@
 import React from "react";
-import RoundsComponent from "@/components/RoundsComponent";
+import RoundsComponent from "../components/RoundsComponent";
 
 import Link from "next/link";
 
