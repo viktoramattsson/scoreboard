@@ -4,7 +4,9 @@ import AppContext from './AppContext';
 import PlayerScoresContext from './PlayerScoresContext';
 import { Button } from '@mui/material';
 import { useRouter } from 'next/router';
+
 import s from './RoundsComponent.module.css';
+// varför hittas inte CSS-fieln??
 
 import {
   Table,
@@ -16,14 +18,19 @@ import {
   Paper,
 } from '@mui/material';
 
+interface Round {
+  id: number,
+  scores: number[]
+}
+
 function RoundsComponent() {
   const context = useContext(AppContext);
   const scoreContext = useContext(PlayerScoresContext);
 
   const { playerName } = context;
 
-  const [rounds, setRounds] = useState([{ id: 1, scores: [] }]);
-  const [currentRound, setCurrentRound] = useState(1);
+  const [rounds, setRounds] = useState<Round[]>([{ id: 1, scores: [] }]);
+  const [currentRound, setCurrentRound] = useState<number>(1);
   const router = useRouter();
 
   const { setPlayerName } = useContext(AppContext);
@@ -31,14 +38,14 @@ function RoundsComponent() {
 
   useEffect(() => {
     if (playerName && playerName.length > 0) {
-      function calculateTotalScore(playerIndex) {
+      function calculateTotalScore(playerIndex: number) {
         return rounds.reduce((total, round) => {
           const score = round.scores[playerIndex];
           return total + (score ? parseInt(score) : 0);
         }, 0);
       }
 
-      const totalScores = playerName.map((_, playerIndex) =>
+      const totalScores = playerName.map((_, playerIndex: number) =>
         calculateTotalScore(playerIndex)
       );
       setPlayerScores(totalScores);
@@ -65,9 +72,9 @@ function RoundsComponent() {
     setCurrentRound(rounds.length + 1);
   }
 
-  function handleScoreChange(roundIndex, playerIndex, score) {
+  function handleScoreChange(roundIndex: number, playerIndex: number, score: number) {
     const updatedRounds = [...rounds];
-    updatedRounds[roundIndex].scores[playerIndex] = score;
+    updatedRounds[roundIndex].scores[playerIndex] = score || 0;
     setRounds(updatedRounds);
   }
 
@@ -110,13 +117,13 @@ function RoundsComponent() {
                         fontSize: '2rem',
                         textAlign: 'center',
                       }}
-                      type="text"
+                      type="number"
                       value={rounds[roundIndex]?.scores[playerIndex] || ''}
                       onChange={(e) =>
                         handleScoreChange(
                           roundIndex,
                           playerIndex,
-                          e.target.value
+                          e.target.valueAsNumber || 0
                         )
                       }
                     />

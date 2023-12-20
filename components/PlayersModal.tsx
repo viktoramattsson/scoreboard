@@ -10,7 +10,10 @@ import {
 } from "@mui/material";
 import AppContext from "./AppContext";
 
-const style = {
+type Player = string
+
+// hur löser jag boxshadow?
+const style: React.CSSProperties = {
   position: "absolute",
   top: "50%",
   left: "50%",
@@ -24,12 +27,15 @@ const style = {
 };
 
 function PlayersModal() {
-  const { setPlayerName } = useContext(AppContext);
+  const { setPlayerName } = useContext(AppContext); // hjälp!!!!!!!
 
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState<boolean>(true);
 
-  const [playerFields, setPlayerFields] = useState([{ id: 1 }]);
-  const [players, setPlayers] = useState([]);
+  const [playerFields, setPlayerFields] = useState<{ id: number }[]>([
+    { id: 1 },
+  ]);;
+
+  const [players, setPlayers] = useState<Player[]>([]);
 
   const handleClose = () => {
     setOpen(false);
@@ -37,10 +43,10 @@ function PlayersModal() {
   };
 
   function addPlayerField() {
-    setPlayerFields((prevFields) => [...prevFields, { id: prevFields + 1 }]);
+    setPlayerFields((prevFields) => [...prevFields, { id: prevFields.length + 1 }]);
   }
 
-  const handlePlayerNameChange = (index, value) => {
+  const handlePlayerNameChange = (index: number, value: string) => {
     const updatedPlayers = [...players];
 
     updatedPlayers[index] = value.charAt(0).toUpperCase() + value.slice(1);

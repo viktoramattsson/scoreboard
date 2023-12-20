@@ -5,7 +5,10 @@ import PlayerScoresContext from "@/components/PlayerScoresContext";
 import HeaderComponent from "@/components/HeaderComponent";
 
 interface PageProps {
-
+// Define the structure of your pageProps
+  // Adjust these types based on the actual structure of your pageProps
+  // For example, if pageProps is an object with a key 'example' of type string,
+  // you can replace any with { example: string }
 }
 
 interface AppProps {
